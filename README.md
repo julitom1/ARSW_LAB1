@@ -1,4 +1,4 @@
-
+﻿
 ### Escuela Colombiana de Ingeniería
 ### Arquitecturas de Software - ARSW
 ## Ejercicio Introducción al paralelismo - Hilos - Caso BlackListSearch
@@ -19,8 +19,16 @@
 2. Complete el método __main__ de la clase CountMainThreads para que:
 	1. Cree 3 hilos de tipo CountThread, asignándole al primero el intervalo [0..99], al segundo [99..199], y al tercero [200..299].
 	2. Inicie los tres hilos con 'start()'.
+	### Start
+	![](img/run.png)
+	### Run
+	![](img/start.png)
 	3. Ejecute y revise la salida por pantalla. 
 	4. Cambie el incio con 'start()' por 'run()'. Cómo cambia la salida?, por qué?.
+	
+	### Explicación
+	Al colocar start podemos ver que imprime los numeros de manera desordenada ya que se esta ejecuntando paralelamente en partes pequeñas, colocando en espera hilos del proceso, por otro lado el metodo run los imprime secuencialmente.
+	
 
 **Parte II - Ejercicio Black List Search**
 
