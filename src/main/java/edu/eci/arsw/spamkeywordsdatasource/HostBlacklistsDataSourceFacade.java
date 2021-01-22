@@ -72,8 +72,11 @@ static ConcurrentHashMap<Touple<Integer,String>,Object> blistocurrences=new Conc
     
     public boolean isInBlackListServer(int serverNumber,String ip){
         
+    	//System.out.println(threadHits+" UNO");
         threadHits.computeIfPresent(Thread.currentThread().getName(), (k, v) -> v + 1);
+        //System.out.println(threadHits+" DOS");
         threadHits.putIfAbsent(Thread.currentThread().getName(), 1);
+        //System.out.println(threadHits+" TRES");
 
         if (System.getProperty("threadsinfo")!=null &&  System.getProperty("threadsinfo").compareToIgnoreCase("true")==0) {
             lastConfig=threadHits.toString();

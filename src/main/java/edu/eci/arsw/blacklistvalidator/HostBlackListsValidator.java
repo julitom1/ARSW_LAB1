@@ -39,9 +39,9 @@ public class HostBlackListsValidator {
         
         int checkedListsCount=0;
         
+        
         for (int i=0;i<skds.getRegisteredServersCount() && ocurrencesCount<BLACK_LIST_ALARM_COUNT;i++){
             checkedListsCount++;
-            
             if (skds.isInBlackListServer(i, ipaddress)){
                 
                 blackListOcurrences.add(i);
