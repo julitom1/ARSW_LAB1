@@ -6,6 +6,8 @@
 package edu.eci.arsw.blacklistvalidator;
 
 import edu.eci.arsw.spamkeywordsdatasource.HostBlacklistsDataSourceFacade;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,18 +30,29 @@ public class HostBlackListsValidator {
      * NOT Trustworthy, and the list of the five blacklists returned.
      * @param ipaddress suspicious host's IP address.
      * @return  Blacklists numbers where the given host's IP address was found.
+     * @throws InterruptedException 
      */
-    public List<Integer> checkHost(String ipaddress){
+    public List<Integer> checkHost(String ipaddress) throws InterruptedException{
         
         LinkedList<Integer> blackListOcurrences=new LinkedList<>();
+        ArrayList <Hilo1> listahilo= new ArrayList();
+        int n=8;
+        for(int i=0 ; i<n; i++) {
+        	Hilo1 hilo = new Hilo1((i*10000)+1,(i+1)*10000,"202.24.34.55");
+        	listahilo.add(hilo);
+        	hilo.start();
+    	}
+        
+        for(int i=0;i<listahilo.size();i++) {
+        	listahilo.get(i).join();
+        }
+        
         
         int ocurrencesCount=0;
         
         HostBlacklistsDataSourceFacade skds=HostBlacklistsDataSourceFacade.getInstance();
         
         int checkedListsCount=0;
-        
-        
         for (int i=0;i<skds.getRegisteredServersCount() && ocurrencesCount<BLACK_LIST_ALARM_COUNT;i++){
             checkedListsCount++;
             if (skds.isInBlackListServer(i, ipaddress)){
