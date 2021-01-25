@@ -1,5 +1,7 @@
 package edu.eci.arsw.blacklistvalidator;
 
+import java.util.LinkedList;
+
 import edu.eci.arsw.spamkeywordsdatasource.HostBlacklistsDataSourceFacade;
 
 public class Hilo1 extends Thread{
@@ -8,6 +10,8 @@ public class Hilo1 extends Thread{
 	private String ip;
 	private HostBlacklistsDataSourceFacade skds=HostBlacklistsDataSourceFacade.getInstance();
 	private int countmal;
+	private int countrango;
+	private LinkedList<Integer> blackListOcurrences=new LinkedList<>();
 	
 	public Hilo1(int inisegmento,int finsegmento,String ip){
 		 this.inisegmento=inisegmento;
@@ -16,15 +20,26 @@ public class Hilo1 extends Thread{
 	}
 	
 	public void run() {
-		for(int i=inisegmento; i<= finsegmento;i++) {
 		countmal=0;
+		countrango=0;
+		for(int i=inisegmento; i<= finsegmento;i++) {
+			countrango+=1;
 			 if (skds.isInBlackListServer(i, ip)){
 				 countmal+=1;
+				 blackListOcurrences.add(i);
 			 }
 		 }
 	}
 	
 	public int getcountmal(){
 		return countmal;
+	}
+	
+	public LinkedList<Integer> getblackListOcurrences(){
+		return blackListOcurrences;
+	}
+	
+	public int getcountrango() {
+		return countrango;
 	}
 }

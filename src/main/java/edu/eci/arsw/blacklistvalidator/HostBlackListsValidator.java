@@ -38,20 +38,27 @@ public class HostBlackListsValidator {
         ArrayList <Hilo1> listahilo= new ArrayList();
         int n=8;
         for(int i=0 ; i<n; i++) {
-        	Hilo1 hilo = new Hilo1((i*10000)+1,(i+1)*10000,"202.24.34.55");
+        	Hilo1 hilo = new Hilo1((i*10000)+1,(i+1)*10000,ipaddress);
         	listahilo.add(hilo);
         	hilo.start();
     	}
         
+        int checkedListsCount=0;
         for(int i=0;i<listahilo.size();i++) {
         	listahilo.get(i).join();
         }
         
-        
         int ocurrencesCount=0;
+        for(int i=0;i<listahilo.size();i++)  {
+        	blackListOcurrences.addAll(listahilo.get(i).getblackListOcurrences());
+        	checkedListsCount+=listahilo.get(i).getcountrango();
+        	ocurrencesCount+=listahilo.get(i).getcountmal();
+        }
+        
+        //int ocurrencesCount=0;
         
         HostBlacklistsDataSourceFacade skds=HostBlacklistsDataSourceFacade.getInstance();
-        
+        /*
         int checkedListsCount=0;
         for (int i=0;i<skds.getRegisteredServersCount() && ocurrencesCount<BLACK_LIST_ALARM_COUNT;i++){
             checkedListsCount++;
@@ -61,7 +68,7 @@ public class HostBlackListsValidator {
                 
                 ocurrencesCount++;
             }
-        }
+        }*/
         
         if (ocurrencesCount>=BLACK_LIST_ALARM_COUNT){
             skds.reportAsNotTrustworthy(ipaddress);
