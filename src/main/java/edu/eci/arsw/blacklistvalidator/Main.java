@@ -21,10 +21,10 @@ public class Main {
         HostBlackListsValidator hblv=new HostBlackListsValidator();
         List<Integer> blackListOcurrences;
         //blackListOcurrences=hblv.checkHost("202.24.34.54",1);
-        //blackListOcurrences=hblv.checkHost("202.24.34.54",r.availableProcessors());
+        blackListOcurrences=hblv.checkHost("202.24.34.55",r.availableProcessors());
         //blackListOcurrences=hblv.checkHost("202.24.34.54",r.availableProcessors()*2);
         //blackListOcurrences=hblv.checkHost("202.24.34.54",50);
-        blackListOcurrences=hblv.checkHost("202.24.34.54",100);
+        //blackListOcurrences=hblv.checkHost("202.24.34.54",100);
         System.out.println("The host was found in the following blacklists:"+blackListOcurrences);
      
           

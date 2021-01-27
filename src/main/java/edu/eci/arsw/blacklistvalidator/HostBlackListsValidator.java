@@ -51,15 +51,32 @@ public class HostBlackListsValidator {
         
         
         int checkedListsCount=0;
-        for(int i=0;i<listahilo.size();i++) {
-        	listahilo.get(i).join();
+        //for(int i=0;i<listahilo.size();i++) {
+        //	listahilo.get(i).join();
+        //}
+        int ocurrencesCount=0;
+        
+        boolean flag=true;
+        while(ocurrencesCount<BLACK_LIST_ALARM_COUNT && flag){
+        	ocurrencesCount=0;
+        	for(int i=0;i<listahilo.size();i++)  {
+        		ocurrencesCount+=listahilo.get(i).getcountmal();
+            }	
+        	flag=listahilo.get(0).isAlive();
+        	for(int i=1;i<listahilo.size();i++)  {
+    			flag=flag || listahilo.get(i).isAlive();
+    		}
+        }
+        for(int i=0;i<listahilo.size();i++)  {
+    		listahilo.get(i).stop();
         }
         
-        int ocurrencesCount=0;
+        
         for(int i=0;i<listahilo.size();i++)  {
         	blackListOcurrences.addAll(listahilo.get(i).getblackListOcurrences());
         	checkedListsCount+=listahilo.get(i).getcountrango();
         	ocurrencesCount+=listahilo.get(i).getcountmal();
+        	
         }
         
         //int ocurrencesCount=0;
