@@ -23,6 +23,7 @@ public class HostBlacklistsDataSourceFacade {
 	
 static ConcurrentHashMap<Touple<Integer,String>,Object> blistocurrences=new ConcurrentHashMap<>();
     
+<<<<<<< HEAD
     static{
         Object anyObject=new Object();
         //to be found by a single thread
@@ -90,6 +91,80 @@ static ConcurrentHashMap<Touple<Integer,String>,Object> blistocurrences=new Conc
     }
     private static final Logger LOG = Logger.getLogger(HostBlacklistsDataSourceFacade.class.getName());
     
+=======
+static ConcurrentHashMap<Touple<Integer,String>,Object> blistocurrences=new ConcurrentHashMap<>();
+    
+    static{
+        Object anyObject=new Object();
+        //to be found by a single thread
+        blistocurrences.put(new Touple<Integer,String>(23,"200.24.34.55"), anyObject);
+        blistocurrences.put(new Touple<Integer,String>(50,"200.24.34.55"), anyObject);
+        blistocurrences.put(new Touple<Integer,String>(200,"200.24.34.55"), anyObject);
+        blistocurrences.put(new Touple<Integer,String>(1000,"200.24.34.55"), anyObject);
+        blistocurrences.put(new Touple<Integer,String>(500,"200.24.34.55"), anyObject);
+
+        //to be found through all threads
+        blistocurrences.put(new Touple<Integer,String>(29,"202.24.34.55"), anyObject);
+        blistocurrences.put(new Touple<Integer,String>(10034,"202.24.34.55"), anyObject);
+        blistocurrences.put(new Touple<Integer,String>(20200,"202.24.34.55"), anyObject);
+        blistocurrences.put(new Touple<Integer,String>(31000,"202.24.34.55"), anyObject);
+        blistocurrences.put(new Touple<Integer,String>(70500,"202.24.34.55"), anyObject);
+        
+
+        //to be found through all threads
+        blistocurrences.put(new Touple<Integer,String>(39,"202.24.34.54"), anyObject);
+        blistocurrences.put(new Touple<Integer,String>(10134,"202.24.34.54"), anyObject);
+        blistocurrences.put(new Touple<Integer,String>(20300,"202.24.34.54"), anyObject);
+        blistocurrences.put(new Touple<Integer,String>(70210,"202.24.34.54"), anyObject);
+
+        
+    }
+    
+    private static HostBlacklistsDataSourceFacade instance=new HostBlacklistsDataSourceFacade();
+
+    private Map<String,Integer> threadHits=new ConcurrentHashMap<String,Integer>();
+           
+    private String lastConfig=null;
+    
+    private int lastIndex=0;
+    
+    private HostBlacklistsDataSourceFacade() {
+        
+    }
+    
+        
+    public static HostBlacklistsDataSourceFacade getInstance(){
+        return instance;
+    }
+    
+    public int getRegisteredServersCount(){
+        return 80000;
+    }
+    
+    public boolean isInBlackListServer(int serverNumber,String ip){
+        
+    	//System.out.println(threadHits+" UNO");
+        threadHits.computeIfPresent(Thread.currentThread().getName(), (k, v) -> v + 1);
+        //System.out.println(threadHits+" DOS");
+        threadHits.putIfAbsent(Thread.currentThread().getName(), 1);
+        //System.out.println(threadHits+" TRES");
+
+        if (System.getProperty("threadsinfo")!=null &&  System.getProperty("threadsinfo").compareToIgnoreCase("true")==0) {
+            lastConfig=threadHits.toString();
+            lastIndex=serverNumber;
+            //System.out.println(threadHits);
+        }        
+        try {
+            Thread.sleep(0,1);   
+        } catch (InterruptedException ex) {
+            Logger.getLogger(HostBlacklistsDataSourceFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return blistocurrences.containsKey(new Touple<Integer,String>(serverNumber,ip));
+        
+    }
+    private static final Logger LOG = Logger.getLogger(HostBlacklistsDataSourceFacade.class.getName());
+    
+>>>>>>> bf24ba0d305328f09bcab8fe57b6f8a86ded44a7
     public void reportAsNotTrustworthy(String host){
         LOG.info("HOST "+host+" Reported as NOT trustworthy");
         if (System.getProperty("threadsinfo")!=null &&  System.getProperty("threadsinfo").compareToIgnoreCase("true")==0) {
